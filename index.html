@@ -11,6 +11,8 @@
       --text-secondary: #6b7280;
       --border-subtle: #e5e7eb;
       --accent: #2563eb;
+      --radius-lg: 12px;
+      --grid-color: #f3f4f6;
     }
 
     * {
@@ -24,12 +26,21 @@
       font-family: "Source Han Sans SC", "思源黑体", -apple-system, BlinkMacSystemFont,
         "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
       -webkit-font-smoothing: antialiased;
+      /* 浅灰网格底纹 */
+      background-image:
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(180deg, var(--grid-color) 1px, transparent 1px);
+      background-size: 32px 32px;
+      background-attachment: fixed;
     }
 
     .page {
       max-width: 960px;
       margin: 0 auto;
       padding: 24px 20px 40px;
+      background-color: #ffffff;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
     }
 
     /* 顶部导航 */
@@ -217,7 +228,7 @@
     }
 
     .project-card {
-      border-radius: 14px;
+      border-radius: var(--radius-lg);
       border: 1px solid var(--border-subtle);
       padding: 14px 14px 16px;
       background-color: #ffffff;
@@ -301,6 +312,47 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+
+    /* 一键打印按钮 */
+    .print-section {
+      padding-top: 20px;
+    }
+
+    .print-bar {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .print-button {
+      padding: 8px 18px;
+      font-size: 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background-color: #111827;
+      color: #ffffff;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background-image: linear-gradient(135deg, #111827, #1f2937);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.25);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    }
+
+    .print-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.35);
+      opacity: 0.96;
+    }
+
+    .print-button:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+      opacity: 0.9;
+    }
+
+    .no-print {
+      /* 在打印样式中统一隐藏 */
     }
 
     .skill-item {
@@ -397,6 +449,37 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
+      }
+    }
+
+    /* 打印样式优化 */
+    @media print {
+      body {
+        background: #ffffff !important;
+        background-image: none !important;
+      }
+
+      .page {
+        max-width: 100%;
+        margin: 0;
+        padding: 12mm 10mm;
+        box-shadow: none;
+        border-radius: 0;
+      }
+
+      .project-card {
+        box-shadow: none;
+        border-color: #d1d5db;
+        break-inside: avoid;
+      }
+
+      .hero,
+      .section-header {
+        break-inside: avoid;
+      }
+
+      .no-print {
+        display: none !important;
       }
     }
   </style>
@@ -562,6 +645,13 @@
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- 一键打印 -->
+      <section class="section print-section no-print">
+        <div class="print-bar">
+          <button class="print-button" onclick="window.print()">一键打印</button>
         </div>
       </section>
     </main>
