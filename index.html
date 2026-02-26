@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>个人简历 · 产品经理</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text-main: #111827;
+      --text-secondary: #6b7280;
+      --border-subtle: #e5e7eb;
+      --accent: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: "Source Han Sans SC", "思源黑体", -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    /* 顶部导航 */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .logo-name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .contact {
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .contact a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .contact a:hover {
+      color: var(--accent);
+      border-color: rgba(37, 99, 235, 0.4);
+    }
+
+    .social {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: background-color 0.15s ease, color 0.15s ease,
+        border-color 0.15s ease, transform 0.12s ease;
+    }
+
+    .icon-circle:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    /* Hero 区块 */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding: 28px 0 32px;
+    }
+
+    .hero-text {
+      flex: 1.4;
+      min-width: 0;
+    }
+
+    .hero-text h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      font-weight: 650;
+    }
+
+    .hero-title {
+      margin: 0 0 16px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .hero-summary {
+      margin: 0 0 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    .hero-highlights {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .hero-highlights li + li {
+      margin-top: 4px;
+    }
+
+    .hero-avatar {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .avatar-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #dbeafe, #1d4ed8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.22);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 如需用照片，只需换成 <img src="avatar.png" class="avatar-img" /> */
+    .avatar-initials {
+      font-size: 32px;
+      font-weight: 600;
+      color: #e5f0ff;
+      letter-spacing: 0.06em;
+    }
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 通用区块样式 */
+    .section {
+      padding: 12px 0 4px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-header h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .section-subtitle {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    /* 项目经历 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .project-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 16px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease,
+        border-color 0.18s ease, background-color 0.18s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.12);
+      border-color: rgba(37, 99, 235, 0.45);
+      background-color: #f9fafb;
+    }
+
+    .project-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .project-role {
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .metric-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .metric-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background-color: rgba(37, 99, 235, 0.06);
+      color: var(--accent);
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      white-space: nowrap;
+    }
+
+    /* 技能树 */
+    .skills-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .skills-note {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .skill-tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background-color: #f4f4f5;
+      color: #3f3f46;
+    }
+
+    .skills-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .skill-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .skill-name {
+      font-weight: 500;
+    }
+
+    .skill-level {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .skill-bar {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background-color: #f4f4f5;
+      overflow: hidden;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #60a5fa, var(--accent));
+      transition: width 0.3s ease;
+    }
+
+    /* 响应式布局 */
+    @media (max-width: 900px) {
+      .project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .skills-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        padding: 16px 16px 28px;
+      }
+
+      .top-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .nav-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+
+      .hero-avatar {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .avatar-circle {
+        width: 110px;
+        height: 110px;
+      }
+
+      .hero-text h1 {
+        font-size: 24px;
+      }
+
+      .project-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .nav-right {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- 顶部导航 -->
+    <header class="top-nav">
+      <div class="logo-name">张三 · 产品经理</div>
+      <div class="nav-right">
+        <div class="contact">
+          <a href="mailto:zhangsan@example.com">zhangsan@example.com</a>
+          <span class="divider">·</span>
+          <span class="contact-text">+86 188-0000-0000</span>
+        </div>
+        <div class="social">
+          <a href="#" class="icon-circle" aria-label="LinkedIn">in</a>
+          <a href="#" class="icon-circle" aria-label="GitHub">GH</a>
+          <a href="#" class="icon-circle" aria-label="WeChat">微</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-text">
+          <h1>张三</h1>
+          <p class="hero-title">Senior Product Manager · B2B / SaaS</p>
+          <p class="hero-summary">
+            3 年+互联网产品经验，主导多款 B2B / SaaS 产品从 0-1 及后续迭代。擅长需求拆解、
+            路线图规划与跨团队协作，用数据驱动产品决策与业务增长。
+          </p>
+          <ul class="hero-highlights">
+            <li>负责千万级用户产品的整体策略与版本规划</li>
+            <li>搭建指标体系，以数据监控体验与业务健康度</li>
+            <li>能在业务、技术与设计之间高效沟通与推进落地</li>
+          </ul>
+        </div>
+
+        <div class="hero-avatar">
+          <div class="avatar-circle">
+            <!-- 如果用真实头像，把下面这行换成 <img src="avatar.png" alt="头像" class="avatar-img" /> -->
+            <span class="avatar-initials">ZS</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 项目经历 -->
+      <section class="section" id="projects">
+        <div class="section-header">
+          <h2>项目经历</h2>
+          <div class="section-subtitle">精选 3 个代表性项目</div>
+        </div>
+
+        <div class="project-grid">
+          <!-- 项目 1 -->
+          <article class="project-card">
+            <div class="project-name">企业协同办公平台 · 移动端重构</div>
+            <div class="project-role">产品负责人</div>
+            <p class="project-desc">
+              负责移动端整体体验重构，从用户访谈与数据分析中识别关键场景，
+              通过信息架构优化与流程收敛，提升主流程完成率与留存。
+            </p>
+            <div class="metric-tags">
+              <span class="metric-tag">DAU 提升 20%</span>
+              <span class="metric-tag">核心流程耗时下降 35%</span>
+              <span class="metric-tag">NPS 提升 18pt</span>
+            </div>
+          </article>
+
+          <!-- 项目 2 -->
+          <article class="project-card">
+            <div class="project-name">SaaS 订阅计费系统 · 0-1</div>
+            <div class="project-role">主责产品经理</div>
+            <p class="project-desc">
+              搭建计费规则模型与套餐体系，协同研发落地完整订阅与对账流程，
+              支撑多币种、多计费周期的复杂业务场景。
+            </p>
+            <div class="metric-tags">
+              <span class="metric-tag">财务对账效率提升 40%</span>
+              <span class="metric-tag">支持 10+ 套付费组合</span>
+              <span class="metric-tag">计费差错率 &lt; 0.5%</span>
+            </div>
+          </article>
+
+          <!-- 项目 3 -->
+          <article class="project-card">
+            <div class="project-name">增长实验平台 · 指标体系搭建</div>
+            <div class="project-role">产品 / 数据双角色</div>
+            <p class="project-desc">
+              定义漏斗指标与看板体系，沉淀 AB 实验流程与模版，帮助业务团队
+              形成以实验为基础的持续优化机制。
+            </p>
+            <div class="metric-tags">
+              <span class="metric-tag">月度实验数提升 3 倍</span>
+              <span class="metric-tag">关键转化率提升 12%</span>
+              <span class="metric-tag">决策周期缩短 30%</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 技能树 -->
+      <section class="section" id="skills">
+        <div class="section-header">
+          <h2>技能树</h2>
+          <div class="section-subtitle">产品方法论 × 落地能力</div>
+        </div>
+
+        <div class="skills-layout">
+          <div>
+            <p class="skills-note">
+              覆盖从需求洞察、方案设计到数据验证与策略迭代的完整产品闭环。
+              在 ToB / ToC 场景均有实践经验，能够在不同阶段灵活调整产品策略。
+            </p>
+            <div class="skills-tags">
+              <span class="skill-tag">用户访谈</span>
+              <span class="skill-tag">PRD / BRD</span>
+              <span class="skill-tag">原型设计</span>
+              <span class="skill-tag">数据实验</span>
+              <span class="skill-tag">Roadmap</span>
+              <span class="skill-tag">跨团队协作</span>
+            </div>
+          </div>
+
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">需求分析</span>
+                <span class="skill-level">深度</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 92%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">原型设计</span>
+                <span class="skill-level">高阶</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 88%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">数据分析</span>
+                <span class="skill-level">熟练</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 80%;"></div>
+              </div>
+            </div>
+
+            <div class="skill-item">
+              <div class="skill-header">
+                <span class="skill-name">产品策略</span>
+                <span class="skill-level">深度</span>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-bar-fill" style="width: 90%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
